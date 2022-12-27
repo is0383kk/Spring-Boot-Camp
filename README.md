@@ -36,6 +36,7 @@ public class AppConfig {
 |---|---|
 |@Configuration|Java Configであることを示す|
 |@ComponentScan|Java Configに付与。basePackages属性のパッケージ配下から@Componentが付与されたクラスを探してインスタンス化しDIコンテナに保持|
+
 ※@Component が付与されていても、コンポーネントスキャンの対象ではない場合、Beanにはならない。
 
 ### DIコンテナの作成  
