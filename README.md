@@ -61,3 +61,10 @@ ApplicationContext context = SpringApplication.run(AppConfig.class, args);
 DataLogic logicA = context.getBean(ALogic.class);
 logicA.method();
 ```
+
+# Spring MVC×ThymeleafでHelloWorld
+- [Spring MVC](https://spring.pleiades.io/spring-framework/docs/current/reference/html/web.html)：Spring BootでWEBアプリを作成する際に使用するフレームワーク 
+- [Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf_ja.html)：Spring MVCのビューとして使用できる
+  - HTML5として記述可能
+  - JSPのようにJavaソースがビュー側に入り込まない
+  - クロスサイトスクリプティング脆弱性を引き起こしにくい
