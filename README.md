@@ -36,4 +36,4 @@ public class AppConfig {
 |アノテーション|説明|
 |---|---|
 |@Configuration|Java Configであることを示す|
-|@ComponentScan|Java Configに付与|
+|@ComponentScan|Java Configに付与。basePackages属性のパッケージ配下から@Componentが付与されたクラスを探してインスタンス化しDIコンテナに保持|
