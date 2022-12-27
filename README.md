@@ -81,14 +81,14 @@ logicA.method();
 
 ## Spring Bootプロジェクトを作ってみる
 - EclipseからSpringスタータプロジェクトを作成する
- - Eclipseから「新規」->「Springスタータプロジェクト」
- - パッケージングは「jar」
- - パッケージネーム・成果物・プロジェクトの名前に合わせる
- - スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
-  - build.gradleに選択した機能情報が記述
+  - Eclipseから「新規」->「Springスタータプロジェクト」
+  - パッケージングは「jar」
+  - パッケージネーム・成果物・プロジェクトの名前に合わせる
+    - スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
+    - build.gradleに選択した機能情報が記述
 
 ## 静的コンテンツを返す機能の作成
 - 静的コンテンツ：常に同じ結果を返すコンテンツ（CSS・JavaScriptなど）※検索エンジンなどで検索した結果で変化するコンテンツを動的コンテンツ  
 - 作成するもの
- - hello.html：静的コンテンツ
- - Application.java（Spring Boot Applicationクラス）
+  - hello.html：静的コンテンツ
+  - Application.java（Spring Boot Applicationクラス）
