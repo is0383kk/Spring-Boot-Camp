@@ -14,8 +14,8 @@ Spring Frameworkの問題点を解決するためにSpring Bootが存在する�
 
 
 
-# DIコンテナ
 <a id="chap1"></a>
+# DIコンテナ
 ## DIコンテナとBean
 - DIコンテナ：Spring Frameworkの動作に必要なインスタンスを保持
 - Bean：DIコンテナで管理されているJavaインスタンス
@@ -70,10 +70,25 @@ logicA.method();
 ```
 ---
 
-# Spring MVC×ThymeleafでHelloWorld
 <a id="chap2"></a>
+# Spring MVC×ThymeleafでHelloWorld
+
 - [Spring MVC](https://spring.pleiades.io/spring-framework/docs/current/reference/html/web.html)：Spring BootでWEBアプリを作成する際に使用するフレームワーク 
 - [Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf_ja.html)：Spring MVCのビューとして使用できる
   - HTML5として記述可能
   - JSPのようにJavaソースがビュー側に入り込まない
   - クロスサイトスクリプティング脆弱性を引き起こしにくい
+
+## Spring Bootプロジェクトを作ってみる
+- EclipseからSpringスタータプロジェクトを作成する
+ - Eclipseから「新規」->「Springスタータプロジェクト」
+ - パッケージングは「jar」
+ - パッケージネーム・成果物・プロジェクトの名前に合わせる
+ - スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
+  - build.gradleに選択した機能情報が記述
+
+## 静的コンテンツを返す機能の作成
+- 静的コンテンツ：常に同じ結果を返すコンテンツ（CSS・JavaScriptなど）※検索エンジンなどで検索した結果で変化するコンテンツを動的コンテンツ  
+- 作成するもの
+ - hello.html：静的コンテンツ
+ - Application.java（Spring Boot Applicationクラス）
