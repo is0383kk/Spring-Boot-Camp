@@ -53,6 +53,8 @@ ApplicationContext context = SpringApplication.run(AppConfig.class, args);
 ```
 これを実行後、AppConfig.classの@ComponentScan内にある「A」と「B」インスタンスがDIコンテナ内にある状態となる。
 
+---
+
 - Beanの取り出し：ApplicationContextのgetBean()メソッドを利用  
 ```java
 DataLogic logicA = context.getBean(ALogic.class);
