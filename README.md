@@ -94,6 +94,12 @@ logicA.method();
 - 作成するもの
   - hello.html：静的コンテンツ
   - Application.java（Spring Boot Applicationクラス）
+- 静的リソースWEBアプリケーションの動作の流れ
+  - HTTPリクエストを受け取る
+  - URLに対応した静的リソースがないか確認
+  - 対応したリソースがあればHTTPレスポンスに格納
+  - 作成したHTTPレスポンスをクライアントに返す
+
 
 ### 静的コンテンツの作成手順
 - hello.index
