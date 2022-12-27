@@ -87,8 +87,62 @@ logicA.method();
     - スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
     - build.gradleに選択した機能情報が記述
 
+続いて、静的コンテンツ・mainメソッドの作成を行う
+
 ## 静的コンテンツを返す機能の作成
 - 静的コンテンツ：常に同じ結果を返すコンテンツ（CSS・JavaScriptなど）※検索エンジンなどで検索した結果で変化するコンテンツを動的コンテンツ  
 - 作成するもの
   - hello.html：静的コンテンツ
   - Application.java（Spring Boot Applicationクラス）
+
+### 静的コンテンツの作成手順
+- hello.index
+  - 配置場所：「src/main/resource/static」に配置する
+  - staic直下に配置したHTMLファイルは[http://localhost:8080/hello.index](http://localhost:8080/hello.index)でアクセスできる
+
+---
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Spring bootで静的コンテンツを表示</title>
+</head>
+<body>
+	<p>Hello World</p>
+</body>
+</html>
+```
+
+### main()メソッドの作成手順
+- Application.java
+  - 配置場所：「com.example.プロジェクト名」に配置する
+  - @SpringBootApplicationを付与
+  - Spring Bootアプリケーションはmain()メソッドから起動する。  
+  - main()メソッド内には、DIコンテナを作成する処理のみを記述する。DIコンテナが作成されるとWEBアプリケーションとして動作する。  
+  
+- @SpringBootApplication：@Configration・@ComponentScan・EnableAutoConfigrationを組み合わせたアノテーション
+  - **@ComponentScanにbasepakagesを指定しない場合、付与したクラスのパッケージ配下がコンポーネントスキャン対象となる**
+    - 今回の場合は「com.example.プロジェクト名」配下がスキャン対象となる
+  - Java Configクラスの役割も兼ねるので、@Beanを付与したメソッドをクラス内に宣言可能
+
+---
+
+```java
+package com.example.springmvcpractice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringMvcPracticeApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringMvcPracticeApplication.class, args);
+	}
+
+}
+```
+
+プロジェクトを「Spring Bootアプリケーション」として実行し、[http://localhost:8080/hello.index](http://localhost:8080/hello.index)にアクセス。
