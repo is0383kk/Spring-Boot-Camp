@@ -33,6 +33,7 @@ public class AppConfig {
 }
 ```
 
-| アノテーション|説明|
+|アノテーション|説明|
+|---|---|
 |@Configuration|Java Configであることを示す|
 |@ComponentScan|Java Configに付与|
