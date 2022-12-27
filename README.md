@@ -9,9 +9,10 @@ Spring FrameworkはJavaで実装されたオープンソースのフレームワ
 Spring Frameworkの問題点を解決するためにSpring Bootが存在する。
 
 - 目次
-  1. [DIコンテナ](#chap1)
-  2. [Spring MVC×ThymeleafでHelloWorld](#chap2)
-    - 静的リソースWEBアプリ  
+- [DIコンテナ](#chap1)
+- [Spring MVC×ThymeleafでHelloWorld](#chap2)
+	- [静的リソースWEBアプリ作成手順](#chap2-1)
+	- [動的リソースWEBアプリ作成手順](#chap2-2)
 
 
 
@@ -90,6 +91,7 @@ logicA.method();
 
 続いて、静的コンテンツ・mainメソッドの作成を行う
 
+<a id="chap2-1"></a>
 ## 静的コンテンツを返す機能の作成
 - 静的コンテンツ：常に同じ結果を返すコンテンツ（CSS・JavaScriptなど）※検索エンジンなどで検索した結果で変化するコンテンツを動的コンテンツ  
 - 作成するもの
@@ -153,3 +155,6 @@ public class SpringMvcPracticeApplication {
 ```
 
 プロジェクトを「Spring Bootアプリケーション」として実行し、[http://localhost:8080/hello.index](http://localhost:8080/hello.index)にアクセス。
+
+<a id="chap2-2"></a>
+## 動的コンテンツを返す機能の作成
