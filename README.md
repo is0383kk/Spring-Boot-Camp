@@ -93,6 +93,37 @@ logicA.method();
     - スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
     - build.gradleに選択した機能情報が記述
 
+---
+
+依存ライブラリを導入後のBuild.gradleは以下のようになる
+```
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.1'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+```
+
+
 続いて、静的コンテンツ・mainメソッドの作成を行う
 
 <a id="chap2-1"></a>
@@ -172,6 +203,8 @@ public class SpringMvcPracticeApplication {
 
 - Controller
 	- リクエスト内容に応じた処理を行い遷移させたいView（ページ）を決める
+		- クライアントからのリクエストはDispatherServletが受け取る。
+		- DispatherServletが処理をコントローラに割り振る
 	- Viewが生成するレスポンスを構築するために必要な動的データがある場合、Modelに格納するオブジェクトを生成する
 	- 作成のルール
 		- コントローラクラス宣言の前に@Controllerを付与
@@ -339,4 +372,144 @@ public class HelloController {
 
 <a id="chap2-4"></a>
 ## リダイレクト機能の作成
+リダイレクト機能を使うことで、ページにアクセスした際自動的に別ページに遷移させられる。  
+[http://localhost:8080/](http://localhost:8080/)にアクセスすると、[http://localhost:8080/hello/index.html](http://localhost:8080/hello/index.html)にリダイレクトする機能を作成する。
 
+- RootController.java
+	- コンテキストルートにアクセスされた際に「hello/index」にリダイレクトする
+
+```java
+package com.example.springmvcpractice.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class RootController {
+	
+	@GetMapping("/")
+	public String root() {
+		// "redirect:"を戻り値の先頭につけることでリダイレクトできる
+		return "redirect:hello/index";
+	}
+}
+```
+
+---
+
+<a id="chap3"></a>
+# Bean Validation
+- Bean Validation
+	- 入力検証のための仕様・フィールドやメソッドの引数にアノテーションを付与し制約条件を指定できる
+	- 入力値チェックなどの複雑なロジックによる検証を行う必要がなくなる
+
+Bean Validationを使用するため、Eclipse上からプロジェクトを右クリックし「スターターの追加」を選択し、「Validation」にチェックを入れて導入する。※他の依存ライブラリにもチェックを入れる。
+
+---
+
+依存ライブラリを導入後のBuild.gradleは以下のようになる
+```
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.1'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+```
+
+<a id="chap3-1"></a>
+## フォームクラスの作成
+- フォームクラス：HTMLフォームからの入力を受け取るクラス
+	- フィールド・getter・setterの名称は画面のform要素のname属性と一致させる
+	- フィールドにBean Validationのアノテーションを付与することで制約
+
+- HelloForm.java：「src/main/java/com/example/web/formHelloForm.java」
+
+```java
+package com.example.springmvcpractice.form;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public class HelloForm {
+	
+	// フィールド
+	@NotBlank
+	@Length(min = 1, max = 20)
+	private String userName;
+	
+	@NotNull
+	@Range(min = 1, max = 100)
+	private Integer age;
+	
+	// Getter・setter
+	public String getUserName() {
+		return userName;
+	}
+	
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+}
+```
+
+|アノテーション名|制約|データ型|要素|
+|---|---|---|---|
+|@Notnull|null：×|全て|-|
+|@Null|null：◯|全て|-|
+|@NotEmpty|null、空：×|java.lang.charSequence <br> java.util.Collection <br> java.util.Map|-|
+
+
+
+# 付録
+## トラブルシューティング
+
+### コントローラクラスの「@GetMapping」などのパスが不適切な場合
+- バグ原因の例：コントローラの「@GetMapping」のパスが誤っている
+- 事象：ステータスが404でWhitelabel Error Pageが表示される。 (type=Not Found, status=404).
+※コンソールにエラー出力は行われない
+
+### 「templates」内のHTMLに問題がある場合 
+- バグ原因の例：「templates/hello/index.html」にて、コントローラから受け取るModelの属性値が誤っている
+- 事象：ステータスが500でWhitelabel Error Pageが表示される。 (type=Internal Server Error, status=500).
+
+例外
+```bash
+ERROR 40914 org.thymeleaf.TemplateEngine [THYMELEAF][http-nio-8080-exec-1] Exception processing template "hello/index": Exception evaluating SpringEL expression: "userNameA" (template: "hello/index" - line 14, col 8)
+
+org.thymeleaf.exceptions.TemplateProcessingException: Exception evaluating SpringEL expression: "userNameA" (template: "hello/index" - line 14, col 8)
+~~~
+~~~
+Caused by: org.springframework.expression.spel.SpelEvaluationException: EL1008E: Property or field 'userNameA' cannot be found on object of type 'com.example.springmvcpractice.form.HelloForm' - maybe not public or not valid?
+```
