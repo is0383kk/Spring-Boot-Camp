@@ -8,14 +8,17 @@ Spring FrameworkはJavaで実装されたオープンソースのフレームワ
 - Bean（Javaのインスタンス）の定義が多数
 Spring Frameworkの問題点を解決するためにSpring Bootが存在する。
 
+---
+
 - 目次
 - [DIコンテナ](#chap1)
 - [Spring MVC×ThymeleafでHelloWorld](#chap2)
 	- [静的リソースWEBアプリ作成手順](#chap2-1)
 	- [動的リソースWEBアプリ作成手順](#chap2-2)
 	- [リクエストパラメータを受け取る動的リソースWEBアプリ作成手順](#chap2-3)
+	- [リダイレクト機能の作成手順](#chap2-4)
 
-
+---
 
 <a id="chap1"></a>
 # DIコンテナ
@@ -331,3 +334,9 @@ public class HelloController {
 
 「Spring Bootアプリケーション」で実行し[http://localhost:8080/hello.html](http://localhost:8080/hello.html)にアクセスする。  
 結果出力画面に入力した値が表示されていればOK。
+
+
+
+<a id="chap2-4"></a>
+## リダイレクト機能の作成
+
