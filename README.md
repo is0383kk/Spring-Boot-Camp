@@ -484,11 +484,12 @@ public class HelloForm {
 }
 ```
 
-|アノテーション名|制約|データ型|要素|
-|---|---|---|---|
-|@Notnull|null：×|全て|-|
-|@Null|null：◯|全て|-|
-|@NotEmpty|null、空：×|java.lang.charSequence <br> java.util.Collection <br> java.util.Map|-|
+|アノテーション|説明|
+|---|---|
+|@NotBlank|null・空文字・半角スペースを許可しない|
+|@Length(min = 1, max = 20)|文字列長が１文字以上２０文字以下|
+|@NotNull|nullを許可しない|
+|@Range(min = 1, max = 100)|数値が１以上１００以下|
 
 
 
