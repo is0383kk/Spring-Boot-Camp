@@ -10,7 +10,7 @@ Spring Frameworkの問題点を解決するためにSpring Bootが存在する�
 
 ---
 
-- 目次
+目次
 - [DIコンテナ](#chap1)
 - [Spring MVC×ThymeleafでHelloWorld](#chap2)
 	- [静的リソースWEBアプリ作成手順](#chap2-1)
