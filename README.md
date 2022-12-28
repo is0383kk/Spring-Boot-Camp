@@ -120,6 +120,7 @@ logicA.method();
 </head>
 <body>
 	<p>Hello World</p>
+	<a href="hello/index">入力ページへ行く </a>
 </body>
 </html>
 ```
@@ -165,10 +166,88 @@ public class SpringMvcPracticeApplication {
 - Controller
 	- リクエスト内容に応じた処理を行い遷移させたいView（ページ）を決める
 	- Viewが生成するレスポンスを構築するために必要な動的データがある場合、Modelに格納するオブジェクトを生成する
-	- 作成の手順
-		- 
+	- 作成のルール
+		- コントローラクラス宣言の前に@Controllerを付与
+		- 処理したいURLを設定することでリクエストに対応したコントローラクラスのメソッドが呼び出される
 - Model
 	- Viewに受け渡したいオブジェクトを格納する入れ物
+	- 作成のルール
+		- Viewに受け渡したいオブジェクトをModelに格納
 - View
 	- Modelに格納されたデータを使い、クライアントに格納するHTMLコンテンツを作成する
+	- 作成のルール
+		- Viewテンプレートレスポンスとして返したいHTMLの雛形をViewテンプレートとして作成（src/main/resorce/templates）
+		- Modelに格納されたオブジェクトデータを埋め込む指定を行う
 	
+### コントローラクラスの作成手順
+[http://localhost:8080/hello/index](http://localhost:8080/hello/index)にアクセスされた際に動作するコントローラクラスを作成する。
+
+- HelloController.java：「src/main/java/com/example/web/controller/HelloController.java」
+	- コントローラクラスに@Controllerが付与される
+	- @RequestMapping・@GetMappingを付与したコントローラメソッドを作成
+
+```java
+package com.example.springmvcpractice.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/hello")
+public class HelloController {
+	
+	@GetMapping("/index")
+	public String index() {
+		return "hello/index";
+	}
+	
+}
+```
+
+|アノテーション|説明|
+|---|---|
+|@Controller|コントローラクラスに付与するアノテーション。@Componentが含まれているためコンポーネントスキャンの対象となる。|
+|@RequestMapping|URLとクラス・メソッドを対応付ける。「http://サーバ名/hello」と対応している。|
+|@GetMapping|HTTPリクエストのGET及びURLとクラス・メソッドを対応付ける。**@RequestMappingと@GetMappingの両方がある場合、URLが結合される。index()メソッドの場合、Requestの「/hello」、Getの「/index」が結合し、「/hello/index」となる。**|
+
+※@RequestMapingはクラス・メソッドに付与できる。@GetMappingはメソッドのみに付与できる
+
+---
+
+- コントローラメソッド
+	- 戻り値は**ビューの論理名（拡張子を除いたもの）**を指定。
+
+```java
+@GetMapping("/index")
+public String index() {
+	return "hello/index";
+}
+```
+
+### Viewテンプレートの作成手順
+画面はHTML5で記述できるTymeleafで作成する。  
+
+- index.html：「src/main/resource/templates/hello/index.html」
+	- サーバで実行された際に格納される値を「th:」で始まる属性を使って記述
+	- 動的リンクを埋め込む場合は「@{リンク}」のようにリンクURL記法を用いる
+
+```html
+<<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>名前を入力してください</h1>
+	<form action="result.html" th:action="@{result}">
+		<input type="text" name="userName">
+		<button>送信</button>
+	</form>
+</body>
+</html>
+```
+
+「Spring Bootアプリケーション」で実行し[http://localhost:8080/hello.html](http://localhost:8080/hello.html)にアクセスする。  
+直接[http://localhost:8080/hello/index](http://localhost:8080/hello/index)にアクセスできることを確認。
