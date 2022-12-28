@@ -13,6 +13,7 @@ Spring Frameworkの問題点を解決するためにSpring Bootが存在する�
 - [Spring MVC×ThymeleafでHelloWorld](#chap2)
 	- [静的リソースWEBアプリ作成手順](#chap2-1)
 	- [動的リソースWEBアプリ作成手順](#chap2-2)
+	- [リクエストパラメータを受け取る動的リソースWEBアプリ作成手順](#chap2-3)
 
 
 
@@ -102,7 +103,10 @@ logicA.method();
   - URLに対応した静的リソースがないか確認
   - 対応したリソースがあればHTTPレスポンスに格納
   - 作成したHTTPレスポンスをクライアントに返す
-
+  
+- 作成するもの
+	- hello.html
+	- Application.java
 
 ### 静的コンテンツの作成手順
 - hello.index
@@ -178,6 +182,11 @@ public class SpringMvcPracticeApplication {
 	- 作成のルール
 		- Viewテンプレートレスポンスとして返したいHTMLの雛形をViewテンプレートとして作成（src/main/resorce/templates）
 		- Modelに格納されたオブジェクトデータを埋め込む指定を行う
+
+  
+- 作成するもの
+	- HelloController.java
+	- index.html
 	
 ### コントローラクラスの作成手順
 [http://localhost:8080/hello/index](http://localhost:8080/hello/index)にアクセスされた際に動作するコントローラクラスを作成する。
@@ -251,3 +260,74 @@ public String index() {
 
 「Spring Bootアプリケーション」で実行し[http://localhost:8080/hello.html](http://localhost:8080/hello.html)にアクセスする。  
 直接[http://localhost:8080/hello/index](http://localhost:8080/hello/index)にアクセスできることを確認。
+
+
+<a id="chap2-3"></a>
+## リクエストパラメータを受け取る動的コンテンツの作成
+リクエストパラメータを受け取り、その内容を反映させた動的コンテンツを作成する。
+  
+- 作成するもの
+	- HelloControllerにメソッドを追加
+	- /hello/result.html
+
+
+### コントローラクラスにメソッドを追加
+
+
+- HelloController.java
+	- result()メソッドを追加
+```java
+package com.example.springmvcpractice.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/hello")
+public class HelloController {
+
+	@GetMapping("/index")
+	public String index() {
+		return "hello/index";
+	}
+
+	@GetMapping("/result")
+	public String result(@RequestParam String userName, Model model) {
+		model.addAttribute("userNameAttribute", userName);
+		return "hello/result";
+	}
+
+}
+```
+
+||説明|
+|---|---|
+|@RequestParam|リクエストパラメータを引数で受け取るためのアノテーション。引数名はリクエストパラメータに合わせる。|
+|Model|コントローラからビューに値を渡すためのインタフェース。addAttribute()メソッドで属性名と値を格納する。第一引数の「"userNameAttribute"」はビューに渡す際の属性名で、ビュー側で「${userNameAttribute}」で受け取る。第2引数は値そのもの。|
+
+### 結果を出力するビューの作成
+
+- result.html
+	- コントローラからModelを通して渡された値には「${属性名}」という変数式を用いる
+	- タグに「th:text」属性を指定する
+
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>結果を出力</title>
+</head>
+<body>
+    <p>ようこそ <span th:text="${userNameAttribute}">ダミーネーム</span>さん</p>
+    <a href="index.html" th:href="@{index}">入力画面に戻る</a>
+</body>
+</html>
+```
+
+「Spring Bootアプリケーション」で実行し[http://localhost:8080/hello.html](http://localhost:8080/hello.html)にアクセスする。  
+結果出力画面に入力した値が表示されていればOK。
