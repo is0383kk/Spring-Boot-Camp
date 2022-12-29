@@ -19,8 +19,8 @@ Spring Frameworkの問題点を解決するためにSpring Bootが存在する�
 	- リクエストパラメータを受け取る動的リソースWEBアプリ作成手順
 	- リダイレクト機能の作成手順
 - [Bean Varidation](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Chap3_BeanVaridation)
-	- Bean Varidationを使った入力値チェックを実装する]
-	- @RequestParamと@Varidatedの違いについて]
-	- 相関バリデーションチェックを実装する]
+	- Bean Varidationを使った入力値チェックを実装する
+	- @RequestParamと@Varidatedの違いについて
+	- 相関バリデーションチェックを実装する
 - 付録
 	- 整備中
