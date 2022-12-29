@@ -568,9 +568,12 @@ public class HelloForm {
 
 <a id="chap3-4"></a>
 ## コントローラの作成
+入力値チェックを行うコントローラメソッドを作成する。  
 
 - HelloController.java
-	- 
+	- メソッドの引数に「@Validated」が付与されていると入力値チェックを行うことができる。
+	- 入力値チェックの結果を「BindingResult」に渡す。
+
 ```java
 package com.example.springmvcpractice.controller;
 
@@ -612,12 +615,40 @@ public class HelloController {
 }
 ```
 
+||説明|
+|@Validated|フォームクラスの引数に付与することでコントローラメソッド実行前に入力値チェックを行う。 <br> @Validated HelloForm helloForm|
+|BindingResult|入力値チェックの結果を保持するインタフェース。<br> エラーがあった場合、「bindingResult.hasErrors()」が「true」を返す。|
+※「BindingResult」の引数はフォームクラスの引数の直後にする。（@Validated AForm aForm,BindingResult bindingResult）
 
-
-
-
-
-
+### 「@RequestParam」を使う場合と「@Validated」を使う場合の違い
+リクエストパラメータ：「?userName="吉田"&age=30」であると考える。
+- @RequestParam
+	- String userName = "吉田"
+	- Integer age = 30
+	```java
+	public String result(@RequestParam String userName, 
+				@RequestParam Integer age, ...)
+	```
+- @Validated
+	- HelloForm型 helloForm.userName = "吉田"
+	- HelloForm型 helloForm.age = 30
+	```java
+	public String result(@Validated HelloForm helloForm,
+			     BindingResult bindingResult, ...) 
+	```
+	
+	```java
+	public class HelloForm {
+	
+	// フィールド
+	@NotBlank
+	@Length(min = 1, max = 20)
+	private String userName;
+	
+	@NotNull
+	@Range(min = 1, max = 100)
+	private Integer age;
+	```
 
 
 
