@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>結果を出力</title>
+</head>
+<body>
+    <p>メールアドレス「 <span th:text="${email}"></span>」が登録されました</p>
+    <a href="index.html" th:href="@{index}">メールアドレス入力画面に戻る</a>
+</body>
+</html>
