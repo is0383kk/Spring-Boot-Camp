@@ -37,7 +37,17 @@ tasks.named('test') {
 
 ```
 
-<a id="chap3-1"></a>
+# Bean Varidationを使った簡単な入力値チェックを実装する
+ここでは、名前と年齢を入力するフォームに対して、Bean Varidationを使った入力値チェックを実装する。
+
+実装の流れは以下のとおりである。
+1. フォームクラスの作成
+2. エラーメッセージの定義
+3. コントローラの作成
+4. ビューの作成
+5. 結果画面の作成
+
+
 ## フォームクラスの作成
 - フォームクラス：HTMLフォームからの入力を受け取るクラス
 	- フィールド・getter・setterの名称は画面のform要素のname属性と一致させる
@@ -92,7 +102,6 @@ public class HelloForm {
 |@Range(min = 1, max = 100)|数値が１以上１００以下|
 
 
-<a id="chap3-2"></a>
 ## エラーメッセージの定義
 入力値チェック時のエラーメッセージを定義する。  
 
@@ -121,51 +130,6 @@ public class HelloForm {
 
 
 
-<a id="chap3-3"></a>
-## ビューの作成
-
-- index.html
-	- 入力値チェック時にエラーがあった場合に、テキストボックスに値を残す
-	- 入力値チェック時にエラーがあった場合に、エラーメッセージを表示する
-
-```html
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>入力画面</title>
-<link rel="stylesheet" href="../../static/css/style.css"
-	th:href="@{/css/style.css}">
-</head>
-
-<body>
-	<h1>名前と年齢を入力してください</h1>
-	<form action="result.html" th:action="@{result}"
-		th:object="${helloForm}">
-		
-		名前：<input type="text" name="userName" placeholder="名前を1〜20文字以内で入力してください" th:field="*{userName}"><br>
-		<div th:errors="*{userName}" class="error">ダミー</div>
-		
-		年齢：<input type="text" name="age" placeholder="年齢を1〜100までの数値で入力してください" th:field="*{age}"><br>
-		<div th:errors="*{age}" class="error">ダミー</div>
-		
-		<button>送信</button>
-	
-	</form>
-	<a href="../index.html" th:href="@{/}">トップ画面へ</a>
-</body>
-
-</html>
-```
-
-|属性|説明|
-|---|---|
-|th:object="&{helloForm}"|この属性で囲まれた部分ではオブジェクト名を省略いて記述することができる。<br> \*{プロパティ名}（アウタリスク構文）|
-|th:field|入力値チェック時にエラーがあった際にテキストボックスの値を残しておく|
-|th:errors|入力値チェック時にエラーがあった際にエラー文を表示する|
-
-
-<a id="chap3-4"></a>
 ## コントローラの作成
 入力値チェックを行うコントローラメソッドを作成する。  
 
@@ -220,6 +184,48 @@ public class HelloController {
 ※「BindingResult」の引数はフォームクラスの引数の直後にする。（@Validated AForm aForm,BindingResult bindingResult）
 
 
+
+## ビューの作成
+
+- /hello/index.html
+	- 入力値チェック時にエラーがあった場合に、テキストボックスに値を残す
+	- 入力値チェック時にエラーがあった場合に、エラーメッセージを表示する
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>入力画面</title>
+<link rel="stylesheet" href="../../static/css/style.css"
+	th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<h1>名前と年齢を入力してください</h1>
+	<form action="result.html" th:action="@{result}"
+		th:object="${helloForm}">
+		
+		名前：<input type="text" name="userName" placeholder="名前を1〜20文字以内で入力してください" th:field="*{userName}"><br>
+		<div th:errors="*{userName}" class="error">ダミー</div>
+		
+		年齢：<input type="text" name="age" placeholder="年齢を1〜100までの数値で入力してください" th:field="*{age}"><br>
+		<div th:errors="*{age}" class="error">ダミー</div>
+		
+		<button>送信</button>
+	
+	</form>
+	<a href="../index.html" th:href="@{/}">トップ画面へ</a>
+</body>
+
+</html>
+```
+
+|属性|説明|
+|---|---|
+|th:object="&{helloForm}"|この属性で囲まれた部分ではオブジェクト名を省略いて記述することができる。<br> \*{プロパティ名}（アウタリスク構文）|
+|th:field|入力値チェック時にエラーがあった際にテキストボックスの値を残しておく|
+|th:errors|入力値チェック時にエラーがあった際にエラー文を表示する|
 <a id="chap3-4-1"></a>
 ### 「@RequestParam」を使う場合と「@Validated」を使う場合の違い
 リクエストパラメータ：「?userName="吉田"&age=30」であると考える。
@@ -254,8 +260,7 @@ public class HelloController {
 	```
 
 
-<a id="chap3-5"></a>
-## 結果画面の作成
+## 結果出力画面の作成
 入力された名前と年齢を表示する画面を作成する。
 コントローラクラスのModelの属性値に設定された値がビューに送られる。
 ```java
@@ -265,7 +270,7 @@ model.addAttribute("age", helloForm.getAge());
 
 --- 
 
-- result.index
+- /hello/result.index
 ```html
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
@@ -285,7 +290,187 @@ model.addAttribute("age", helloForm.getAge());
 「Spring Bootアプリケーション」として実行し、入力値チェックが行われ結果画面に遷移すればOK。
 
 
-<a id="chap3-6"></a>
-## 相関バリデーションチェックを実装する
+# Bean Varidationを使った簡単な相関バリデーションチェックを実装する
 相関バリデーションとは「メールアドレスを２回入力して比較する入力値チェック」「２つの項目の大小を比較する入力値チェック」など複数の項目にまたがった入力値チェックのことをいう。  
 今回は、メールアドレスを2回入力させる相関バリデーションチェックを実装する。
+
+1. フォームクラスの作成
+2. エラーメッセージの定義
+3. コントローラの作成
+4. ビューの作成
+5. 結果画面の作成
+
+## フォームクラスの作成
+
+- EmailForm.java
+	- フィールドにメールアドレスとメールアドレス（確認用）を持つ
+	- ２つのフィールドが同じ値かどうかをbooleanで評価するメソッドを持つ
+		- 「@AssertTrue」を付与することで「true」以外を返すとエラーメッセージを出力させる
+		- メソッド名は「is」で始める必要がある
+		- 「Objects.equals()」は２つのオブジェクトが等しいかを判定する
+
+	
+```java
+package com.example.springbeanvaridation.form;
+
+import java.util.Objects;
+
+import org.hibernate.validator.constraints.Length;
+
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotBlank;
+
+public class EmailForm {
+	
+	// フィールド
+	@NotBlank
+	@Length(min = 10, max = 100)
+	private String email;
+	
+	@NotBlank
+	@Length(min = 10, max = 100)
+	private String confirmEmail;
+
+	// getter・setter
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getConfirmEmail() {
+		return confirmEmail;
+	}
+
+	public void setConfirmEmail(String confirmEmail) {
+		this.confirmEmail = confirmEmail;
+	}
+	
+	// true以外を不可
+	@AssertTrue 
+	public boolean isSameEmail() {
+		return Objects.equals(email, confirmEmail);
+	}
+
+}
+```
+
+## エラーメッセージの定義
+「messages.properties」に以下のエラーメッセージを定義する。  
+```
+# エラーメッセージ
+# EmailForm
+AssertTrue.emailForm.sameEmail=メールアドレスが一致していません
+
+
+# プロパティ名
+# EmailForm
+email=メールアドレス
+confirmEmail=メールアドレス（確認用）
+```
+
+## コントローラクラスの作成
+
+- CompareController.java
+	- コントローラメソッドの引数にフォームクラスを指定し「@Validated」を付与する（@Validated EmailForm emailForm, BindingResult bindingResult）
+	- 今回は「@PostMapping」を使用する。※サーバ上のDBなどの値を操作する際はPOSTを使う
+
+```java
+package com.example.springbeanvaridation.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.springbeanvaridation.form.EmailForm;
+
+@Controller
+@RequestMapping("/compare")
+public class CompareController {
+	
+	@GetMapping("/index")
+	public String index(EmailForm emailForm, Model model) {
+		return "compare/index";
+	}
+	
+	@PostMapping("/result")
+	public String result(@Validated EmailForm emailForm,
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "compare/index";
+		}
+		
+		model.addAttribute("email", emailForm.getEmail());
+		return "compare/result";
+	}
+
+}
+```
+
+## ビューの作成
+
+- /compare/index.html
+	- フィールドに対する入力値チェックのための要素
+		```html 
+		<div th:errors="*{email}" class="error">
+		```
+		```html
+		<div th:errors="*{confirmEmail}" class="error">
+		```
+	- 相関バリデーションチェックのための要素
+		- 「EmailForm」クラスの「isSameEmail()」のisを抜いた部分「sameEmail」が式変数となる
+		```html
+		<div th:errors="*{sameEmail}" class="error">
+		```
+		```
+		public boolean isSameEmail() {
+			return Objects.equals(email, confirmEmail);
+		}
+		```
+
+---
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>入力画面</title>
+<link rel="stylesheet" href="../../static/css/style.css"
+    th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <h1>メールアドレスを入力してください</h1>
+    <form method="post" action="result.html" th:action="@{result}" th:object="${emailForm}">
+    
+    メールアドレス：<input type="text" name="email" th:field="*{email}"> <br>
+    
+    <div th:errors="*{email}" class="error">
+    ダミー
+    </div>
+    
+    <div th:errors="*{sameEmail}" class="error">
+    ダミー
+    </div>
+    
+    メールアドレス（確認用）：<input type="text" name="confirmEmail" th:field="*{confirmEmail}"> <br>
+    
+    <div th:errors="*{confirmEmail}" class="error">
+    ダミー
+    </div>
+    
+    <button>登録する</button>
+    
+    </form>
+    <a href="../index.html" th:href="@{/}">トップ画面へ戻る</a>
+</body>
+
+</html>
+```
