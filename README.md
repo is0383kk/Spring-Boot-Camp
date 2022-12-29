@@ -499,27 +499,118 @@ public class HelloForm {
 
 - エラーメッセージ定義手順
 	- 「src/main/resources」に「messages.properties」というファイルを作成する。
-		- ```
-		NotBlank.helloForm.userName={0}は必須入力です
-		NotNull.helloForm.age={0}は必須入力です
-		Length.helloForm.userName={0}は{2}文字以上{1}文字以下で入力してください
-		Range.helloForm.age={0}は{2}以上{1}以下で入力してください
-		typeMismatch.java.lang.Integer={0}は整数で入力してください
+		- ファイル記述のルール
+			- アノテーション名.フォーム名.プロパティ名（NotBlank.helloForm.userName）
+			- アノテーション名.プロパティ名（NotBlank.userName）
+			- 「{0}」には同じファイル上で定義しているプロパティ名（helloForm.userName=名前）
+			- 「{1}」以降はアノテーションの属性値（アルファベット順）※@Rangeだと「max」「min」の順番で入るので「{1}」に「max」が入る
+		- messages.properties
+		
+			```
+			NotBlank.helloForm.userName={0}は必須入力です
+			NotNull.helloForm.age={0}は必須入力です
+			Length.helloForm.userName={0}は{2}文字以上{1}文字以下で入力してください
+			Range.helloForm.age={0}は{2}以上{1}以下で入力してください
+			typeMismatch.java.lang.Integer={0}は整数で入力してください
 
-		helloForm.userName=名前
-		helloForm.age=年齢
-		```
+			helloForm.userName=名前
+			helloForm.age=年齢
+			```
+		
 	- 「src/main/resources」の「application.properties」に「messages.properties」のパスを通す
 		- ```spring.messages.basename=messages```
 
 
 
+<a id="chap3-3"></a>
+## ビューの作成
+
+- index.html
+	- 入力値チェック時にエラーがあった場合に、テキストボックスに値を残す
+	- 入力値チェック時にエラーがあった場合に、エラーメッセージを表示する
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>入力画面</title>
+<link rel="stylesheet" href="../../static/css/style.css"
+	th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<h1>名前と年齢を入力してください</h1>
+	<form action="result.html" th:action="@{result}"
+		th:object="${helloForm}">
+		
+		名前：<input type="text" name="userName" placeholder="名前を1〜20文字以内で入力してください" th:field="*{userName}"><br>
+		<div th:errors="*{userName}" class="error">ダミー</div>
+		
+		年齢：<input type="text" name="age" placeholder="年齢を1〜100までの数値で入力してください" th:field="*{age}"><br>
+		<div th:errors="*{age}" class="error">ダミー</div>
+		
+		<button>送信</button>
+	
+	</form>
+	<a href="../index.html" th:href="@{/}">トップ画面へ</a>
+</body>
+
+</html>
+```
+
+|属性|説明|
+|---|---|
+|th:object="&{helloForm}"|この属性で囲まれた部分ではオブジェクト名を省略いて記述することができる。<br> \*{プロパティ名}（アウタリスク構文）|
+|th:field|入力値チェック時にエラーがあった際にテキストボックスの値を残しておく|
+|th:errors|入力値チェック時にエラーがあった際にエラー文を表示する|
 
 
+<a id="chap3-4"></a>
+## コントローラの作成
 
+- HelloController.java
+	- 
+```java
+package com.example.springmvcpractice.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.springmvcpractice.form.HelloForm;
 
+@Controller
+@RequestMapping("/hello")
+public class HelloController {
 
+	@GetMapping("/index")
+	public String index(Model model) {
+		
+		model.addAttribute("helloForm", new HelloForm());
+		
+		return "hello/index";
+	}
+
+	@GetMapping("/result")
+	public String result(@Validated HelloForm helloForm,
+			BindingResult bindingResult, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			System.out.println("入力値チェック");
+			return "hello/index";
+		}
+		
+		model.addAttribute("userName", helloForm.getUserName());
+		model.addAttribute("age", helloForm.getAge());
+		
+		return "hello/result";
+	}
+
+}
+```
 
 
 
