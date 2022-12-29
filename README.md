@@ -493,6 +493,47 @@ public class HelloForm {
 |@Range(min = 1, max = 100)|数値が１以上１００以下|
 
 
+<a id="chap3-2"></a>
+## エラーメッセージの定義
+入力値チェック時のエラーメッセージを定義する。  
+
+- エラーメッセージ定義手順
+	- 「src/main/resources」に「messages.properties」というファイルを作成する。
+		- ```
+		NotBlank.helloForm.userName={0}は必須入力です
+		NotNull.helloForm.age={0}は必須入力です
+		Length.helloForm.userName={0}は{2}文字以上{1}文字以下で入力してください
+		Range.helloForm.age={0}は{2}以上{1}以下で入力してください
+		typeMismatch.java.lang.Integer={0}は整数で入力してください
+
+		helloForm.userName=名前
+		helloForm.age=年齢
+		```
+	- 「src/main/resources」の「application.properties」に「messages.properties」のパスを通す
+		- ```spring.messages.basename=messages```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 付録
 ## トラブルシューティング
