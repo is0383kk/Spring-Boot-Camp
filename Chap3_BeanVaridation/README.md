@@ -226,7 +226,9 @@ public class HelloController {
 |th:object="&{helloForm}"|この属性で囲まれた部分ではオブジェクト名を省略いて記述することができる。<br> \*{プロパティ名}（アウタリスク構文）|
 |th:field|入力値チェック時にエラーがあった際にテキストボックスの値を残しておく|
 |th:errors|入力値チェック時にエラーがあった際にエラー文を表示する|
-<a id="chap3-4-1"></a>
+
+
+
 ### 「@RequestParam」を使う場合と「@Validated」を使う場合の違い
 リクエストパラメータ：「?userName="吉田"&age=30」であると考える。
 - @RequestParam
@@ -474,3 +476,5 @@ public class CompareController {
 
 </html>
 ```
+
+「Spring Bootアプリケーション」として実行し、入力値チェックが行われ結果画面に遷移すればOK。
