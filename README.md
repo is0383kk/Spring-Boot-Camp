@@ -620,9 +620,12 @@ public class HelloController {
 |BindingResult|入力値チェックの結果を保持するインタフェース。<br> エラーがあった場合、「bindingResult.hasErrors()」が「true」を返す。|
 ※「BindingResult」の引数はフォームクラスの引数の直後にする。（@Validated AForm aForm,BindingResult bindingResult）
 
+
+<a id="chap3-4-1"></a>
 ### 「@RequestParam」を使う場合と「@Validated」を使う場合の違い
 リクエストパラメータ：「?userName="吉田"&age=30」であると考える。
 - @RequestParam
+	- リクエストパラメータ名と@RequestParamの引数を合わせるとリクエストパラメータが格納される
 	- String userName = "吉田"
 	- Integer age = 30
 	```java
@@ -630,6 +633,7 @@ public class HelloController {
 				@RequestParam Integer age, ...)
 	```
 - @Validated
+	- フォームクラスに同名のフィールドとsetter・getterがあるとリクエストパラメータが格納される
 	- HelloForm型 helloForm.userName = "吉田"
 	- HelloForm型 helloForm.age = 30
 	```java
@@ -649,6 +653,42 @@ public class HelloController {
 	@Range(min = 1, max = 100)
 	private Integer age;
 	```
+
+
+<a id="chap3-5"></a>
+## 結果画面の作成
+入力された名前と年齢を表示する画面を作成する。
+コントローラクラスのModelの属性値に設定された値がビューに送られる。
+```java
+model.addAttribute("userName", helloForm.getUserName());
+model.addAttribute("age", helloForm.getAge());
+```
+
+--- 
+
+- result.index
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>結果を出力</title>
+</head>
+<body>
+    <p>ようこそ <span th:text="${userName}">ダミー</span>さん</p>
+    <p>年齢：<span th:text="${age}">20</span></p>
+    <a href="index.html" th:href="@{index}">入力画面に戻る</a>
+</body>
+</html>
+
+```
+
+「Spring Bootアプリケーション」として実行し、入力値チェックが行われ結果画面に遷移すればOK。
+
+## 相関バリデーションチェックを実装する
+相関バリデーションとは「メールアドレスを２回入力して比較する入力値チェック」「２つの項目の大小を比較する入力値チェック」など複数の項目にまたがった入力値チェックのことをいう。  
+今回は、メールアドレスを2回入力させる相関バリデーションチェックを実装する。
+
 
 
 
