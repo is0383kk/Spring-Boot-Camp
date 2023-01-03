@@ -14,6 +14,11 @@
     - スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
     - build.gradleに選択した機能情報が記述
 
+|機能|説明|
+|---|---|
+|spring-boot-starter-web|Web関連ライブラリをまとめたStarterライブラリ。Spring MVC本体及び組み込みTomcatなどが含まれる。|
+|spring-boot-starter-thymeleaf|Thymeleaf関連ライブラリをまとめたStarterライブラリ。Thymeleaf及びSpring MVCとの連携ライブラリが含まれる。|
+
 ---
 
 依存ライブラリを導入後のBuild.gradleは以下のようになる
