@@ -71,6 +71,7 @@ mybatis.configuration.map-underscore-to-camel-case=true
 |spring.datasource.url|JDBCのURLを指定する。「spring.datasource.url=jdbc:mysql://localhost/DB名」とする。|
 |spring.datasource.username|DBのユーザ名を指定する。|
 |spring.datasource.password|DBのパスワードを指定する。|
+|mybatis.configuration.map-underscore-to-camel-case=true|「hoge_hoge」から「hogeHoge」への変換を有効化する|
 
 - テーブルの作成
 ```sql
@@ -100,7 +101,7 @@ MyBatis-springを使ってDBアクセスを行うアプリケーションの開�
   - インタフェースを実装したクラスとインスタンスは、MyBatis-Springによって生成され、インスタンスはDIコンテナでBeanとして管理される
 
 ## エンティティクラスの作成手順
-- エンティティクラス：クラス＝テーブル・フィールド＝カラムに対応する
+- エンティティクラス：DBからの検索結果を保持する。クラス＝テーブル・フィールド＝カラムに対応する
 	- クラス名は任意に設定可能
 	- 引数なしコンストラクタを必ず持つ
 	- フィールド名はSELECTした列名と同名にする
@@ -180,3 +181,12 @@ public class Employee {
 |VARCHAR(256) email|String email|
   
 DBカラムの型とJavaの型の対応関係は[ここ](https://mybatis.org/mybatis-3/ja/configuration.html#typeHandlers)を参照
+
+## Mapper
+- Mapperインタフェース：DBへのアクセスを行う
+	- アノテーション・XMLでSQL文を記述する
+
+---
+
+- EmployeeMapper.java：「src/main/java/com/example/mapper/EmployeeMapper.java」
+	- 社員を全件
