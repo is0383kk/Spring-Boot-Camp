@@ -373,11 +373,13 @@ public class SpringMybatisSpringApplication {
 
 ### 実行結果に詳細ログを出力する
 application.propertiesに  
-```logging.level.com.example.springmybatisspring.mapper.EmployeeMapper=debug```
+```logging.level.com.example.springmybatisspring.mapper.EmployeeMapper=debug```  
 を記述する。  
+  
   
 そうして実行した結果は以下のように実行したSQL文が可視化される。  
 また、「Preparing: SELECT * FROM employee WHERE id = ?」の次の行には「==> Parameters: 1(Integer)」のように「？」の部分に対応するパラメータが表示される。
+
 ```java
 ===================全検索===================
 2023-01-04T16:38:39.868+09:00  INFO 32503 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
