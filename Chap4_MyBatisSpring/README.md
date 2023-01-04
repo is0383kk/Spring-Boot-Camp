@@ -189,4 +189,61 @@ DBカラムの型とJavaの型の対応関係は[ここ](https://mybatis.org/myb
 ---
 
 - EmployeeMapper.java：「src/main/java/com/example/mapper/EmployeeMapper.java」
-	- 社員を全件
+	1. 社員を全件検索
+		- @Select("SELECT * FROM employee")
+	2. 社員を主キー検索
+		- @Select("SELECT * FROM employee WHERE id = #{id}")
+	3. 社員の追加：
+		- @Insert("INSERT INTO employee(name, joined_data, department_name, email)" + " VALUES(#{name}, #{joinedDate}, #{departmentName}, #{email})")
+		- @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+	4. 主キーで指定した社員情報の更新
+		- @Update("UPDATE employee SET name = #{name}, joined_date = #{joindDate}," + " department_name = #{departmentDate}, email = #{email} WHERE id = #{id}")
+	5. 主キーで指定した社員の削除
+		- @Delete("DELETE FROM employee WHERE id = #{id}")
+  
+```java
+package com.example.springmybatisspring.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.*;
+import com.example.springmybatisspring.entity.Employee;
+
+@Mapper
+public interface EmployeeMapper {
+	
+	// 1. 全検索
+	@Select("SELECT * FROM employee")
+	List<Employee> findALL();
+	
+	// 2. 主キー検索
+	@Select("SELECT * FROM employee WHERE id = #{id}")
+	Employee findById(Integer id);
+	
+	// 3. 社員追加
+	@Insert("INSERT INTO employee(name, joined_data, department_name, email)" + 
+			 " VALUES(#{name}, #{joinedDate}, #{departmentName}, #{email})")
+	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+	void insert(Employee employee);
+	
+	// 4. 主キーで指定した社員情報の更新
+	@Update("UPDATE employee SET name = #{name}, joined_date = #{joindDate}," + 
+			 " department_name = #{departmentDate}, email = #{email} WHERE id = #{id}")
+	int update(Employee employee);
+	
+	// 5. 主キーで指定した社員の削除
+	@Delete("DELETE FROM employee WHERE id = #{id}")
+	int delete(Integer id);
+
+}
+```
+
+|アノテーション|説明|
+|---|---|
+|@Mapper|Mapperインタフェースを示すアノテーション|
+|@Select|SELECT文を記述するアノテーション <br> ※戻り値は全検索の様に複数データある場合は「List<Employee>」にし、0件または1件の場合は「Employee」とする|
+|@Insert|INSERT文を記述するアノテーション|
+|@Options|検索や追加の際のオプションを指定するアノテーション <br> 社員追加時にDBで採番されたIDをemployeeのidフィールドに代入するように指定している <br> 「useGeneratedKeys」：採番された主キー値を代入する際は「true」にする <br> 「keyColumn」：テーブル側で主キーを表すカラム名 <br> エンティティクラス側で主キー表すフィールド名|
+|@Update|UPDATE文を記述するアノテーション　<br> ※戻り値に整数型を指定すると更新したレコード数が返却される|
+|@Delete|DELETE文を記述するアノテーション|
+
