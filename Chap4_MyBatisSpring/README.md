@@ -98,3 +98,85 @@ MyBatis-springを使ってDBアクセスを行うアプリケーションの開�
   - DBアクセスを行うインタフェース
   - メソッドを定義し、アノテーションの付与・XML内にSQL文を記述する
   - インタフェースを実装したクラスとインスタンスは、MyBatis-Springによって生成され、インスタンスはDIコンテナでBeanとして管理される
+
+## エンティティクラスの作成手順
+- エンティティクラス：クラス＝テーブル・フィールド＝カラムに対応する
+	- クラス名は任意に設定可能
+	- 引数なしコンストラクタを必ず持つ
+	- フィールド名はSELECTした列名と同名にする
+		- ※「DB側:joined_data」の場合、「Java側:joinedData」とする
+		- 「mybatis.configuration.map-underscore-to-camel-case=true」とすることで以上の変換が可能
+	- getter・setterを持つ
+
+---
+
+- Employee.java：「src/main/java/com/example/entity/employee.java」
+
+```java
+package com.example.springmybatisspring.entity;
+
+import java.time.LocalDate;
+
+public class Employee {
+	
+	/**
+	 * フィールド
+	 * DBのカラムに対応する
+	 */
+	private Integer id;
+	
+	private String name;
+	
+	private LocalDate joinedData;
+	
+	private String departmentName;
+	
+	private String email;
+	
+	
+	/**
+	 * getter・setter
+	 */
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public LocalDate getJoinedData() {
+		return joinedData;
+	}
+	public void setJoinedData(LocalDate joinedData) {
+		this.joinedData = joinedData;
+	}
+	public String getDepartmentName() {
+		return departmentName;
+	}
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+}
+```
+
+|DBカラム名|Employeeクラスのフィールド名|
+|---|---|
+|INTEGER id|Integer id|
+|VARCHAR(10) String name name||
+|DATE joined_data|LocalDate joinedData|
+|VARCHAR(20) department_name|String departmentName|
+|VARCHAR(256) email|String email|
+  
+DBカラムの型とJavaの型の対応関係は[ここ](https://mybatis.org/mybatis-3/ja/configuration.html#typeHandlers)を参照
