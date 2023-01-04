@@ -217,22 +217,25 @@ public interface EmployeeMapper {
 	List<Employee> findALL();
 	
 	// 2. 主キー検索
-	@Select("SELECT * FROM employee WHERE id = #{id}")
+	@Select({"SELECT * FROM employee",
+		 "WHERE id = #{id}"})
 	Employee findById(Integer id);
 	
 	// 3. 社員追加
-	@Insert("INSERT INTO employee(name, joined_data, department_name, email)" + 
-			 " VALUES(#{name}, #{joinedDate}, #{departmentName}, #{email})")
+	@Insert({"INSERT INTO employee(name, joined_date, department_name, email)",
+		 "VALUES(#{name}, #{joinedDate}, #{departmentName}, #{email})"})
 	@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
 	void insert(Employee employee);
 	
 	// 4. 主キーで指定した社員情報の更新
-	@Update("UPDATE employee SET name = #{name}, joined_date = #{joindDate}," + 
-			 " department_name = #{departmentDate}, email = #{email} WHERE id = #{id}")
+	@Update({"UPDATE employee", 
+		 "SET name = #{name}, joined_date = #{joinedDate}, department_name = #{departmentName}, email = #{email}", 
+		 "WHERE id = #{id}"})
+
 	int update(Employee employee);
 	
 	// 5. 主キーで指定した社員の削除
-	@Delete("DELETE FROM employee WHERE id = #{id}")
+	@Delete({"DELETE FROM employee WHERE id = #{id}"})
 	int delete(Integer id);
 
 }
@@ -369,3 +372,50 @@ public class SpringMybatisSpringApplication {
 ```
 
 ### 実行結果に詳細ログを出力する
+application.propertiesに  
+```logging.level.com.example.springmybatisspring.mapper.EmployeeMapper=debug```
+を記述する。  
+  
+そうして実行した結果は以下のように実行したSQL文が可視化される。  
+また、「Preparing: SELECT * FROM employee WHERE id = ?」の次の行には「==> Parameters: 1(Integer)」のように「？」の部分に対応するパラメータが表示される。
+```java
+===================全検索===================
+2023-01-04T16:38:39.868+09:00  INFO 32503 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-01-04T16:38:40.120+09:00  INFO 32503 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@43a09ce2
+2023-01-04T16:38:40.122+09:00  INFO 32503 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-01-04T16:38:40.128+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findALL      : ==>  Preparing: SELECT * FROM employee
+2023-01-04T16:38:40.145+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findALL      : ==> Parameters: 
+2023-01-04T16:38:40.166+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findALL      : <==      Total: 4
+全検索結果 => id：1 ,name：吉田佑希 ,joinedDate：2022-04-01 ,departmentName：開発部 ,email：tanaka.taro@example.com
+全検索結果 => id：2 ,name：佐藤花子 ,joinedDate：2022-04-01 ,departmentName：営業部 ,email：sato.hanako@example.com
+全検索結果 => id：3 ,name：山田次郎 ,joinedDate：2022-04-01 ,departmentName：人事部 ,email：yamada.jiro@example.com
+全検索結果 => id：4 ,name：鈴木一郎 ,joinedDate：2022-04-01 ,departmentName：開発部 ,email：suzuki.ichirou@example.com
+===================主キー検索===================
+2023-01-04T16:38:40.170+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : ==>  Preparing: SELECT * FROM employee WHERE id = ?
+2023-01-04T16:38:40.170+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : ==> Parameters: 1(Integer)
+2023-01-04T16:38:40.172+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : <==      Total: 1
+主キー検索(key=1) => id：1 ,name：吉田佑希 ,joinedDate：2022-04-01 ,departmentName：開発部 ,email：tanaka.taro@example.com
+===================社員追加===================
+2023-01-04T16:38:40.172+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.insert       : ==>  Preparing: INSERT INTO employee(name, joined_date, department_name, email) VALUES(?, ?, ?, ?)
+2023-01-04T16:38:40.173+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.insert       : ==> Parameters: 森川悠人(String), 2022-04-01(LocalDate), お遊び部(String), m.y@example.com(String)
+2023-01-04T16:38:40.180+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.insert       : <==    Updates: 1
+社員追加 => id：14 ,name：森川悠人 ,joinedDate：2022-04-01 ,departmentName：お遊び部 ,email：m.y@example.com
+===================社員更新===================
+2023-01-04T16:38:40.181+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : ==>  Preparing: SELECT * FROM employee WHERE id = ?
+2023-01-04T16:38:40.182+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : ==> Parameters: 1(Integer)
+2023-01-04T16:38:40.183+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : <==      Total: 1
+2023-01-04T16:38:40.183+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.update       : ==>  Preparing: UPDATE employee SET name = ?, joined_date = ?, department_name = ?, email = ? WHERE id = ?
+2023-01-04T16:38:40.184+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.update       : ==> Parameters: 吉田佑希(String), 2022-04-01(LocalDate), 開発部(String), tanaka.taro@example.com(String), 1(Integer)
+2023-01-04T16:38:40.185+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.update       : <==    Updates: 1
+更新された要員 => id：1 ,name：吉田佑希 ,joinedDate：2022-04-01 ,departmentName：開発部 ,email：tanaka.taro@example.com
+===================社員削除===================
+2023-01-04T16:38:40.185+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : ==>  Preparing: SELECT * FROM employee WHERE id = ?
+2023-01-04T16:38:40.185+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : ==> Parameters: 14(Integer)
+2023-01-04T16:38:40.186+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.findById     : <==      Total: 1
+削除する要員 => id：14 ,name：森川悠人 ,joinedDate：2022-04-01 ,departmentName：お遊び部 ,email：m.y@example.com
+2023-01-04T16:38:40.187+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.delete       : ==>  Preparing: DELETE FROM employee WHERE id = ?
+2023-01-04T16:38:40.187+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.delete       : ==> Parameters: 14(Integer)
+2023-01-04T16:38:40.191+09:00 DEBUG 32503 --- [           main] c.e.s.mapper.EmployeeMapper.delete       : <==    Updates: 1
+2023-01-04T16:38:40.194+09:00  INFO 32503 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-01-04T16:38:40.196+09:00  INFO 32503 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+```
