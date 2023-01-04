@@ -175,7 +175,7 @@ public class Employee {
 |DBカラム名|Employeeクラスのフィールド名|
 |---|---|
 |INTEGER id|Integer id|
-|VARCHAR(10) String name name||
+|VARCHAR(10) name|String name|
 |DATE joined_data|LocalDate joinedData|
 |VARCHAR(20) department_name|String departmentName|
 |VARCHAR(256) email|String email|
