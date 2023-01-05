@@ -8,8 +8,9 @@ Dependency Injection（DIコンテナ）が機能の中心。
 - 記述すべきJava Configが大量
 - Bean（Javaのインスタンス）の定義が多数  
 
-Spring Frameworkの問題点を解決するためにSpring Bootが存在する。
-Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供しているのみで純粋なSpringである。    
+Spring Frameworkの問題点を解決するためにSpring Bootが存在する。  
+Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供しているのみで純粋なSpringである。  
+
 ---
 
 Spring Bootには大きく2つの利点が存在する。
