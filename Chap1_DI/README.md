@@ -5,7 +5,7 @@ Spring Frameworkにおいては、アプリケーション実行時にインス�
   
 - DIコンテナ：Spring Frameworkの動作に必要なインスタンスを保持する入れ物
   - あるBeanを別のBeanに代入する（Dependency Injection）
-  - トランザクション管理などの割り込み処理を織り込む（AOP）
+  - トランザクション管理などの割り込み処理を織り込む（Aspected Oriented Programming）
   - Beanインスタンスのライフサイクルを管理する
 - Bean：DIコンテナで管理されているインスタンス
   - Bean定義の方法
