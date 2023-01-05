@@ -25,6 +25,8 @@ Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供�
 
 目次
 - [DIコンテナ](https://github.com/is0383kk/Spring-Boot-Camp/blob/main/Chap1_DI/README.md)
+	- Bean定義方法①：コンポーネントスキャンによるBeanの定義
+	- Bean定義方法②：Java ConfigによるBean定義
 - [Spring MVC×ThymeleafでHelloWorld](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Chap2_SpringMVC)
 	- 静的リソースWEBアプリ作成手順
 	- 動的リソースWEBアプリ作成手順
@@ -38,10 +40,10 @@ Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供�
 	- 永続化層
 	- My-Batis-Springのための設定
 	- MyBatis-Springを使ったDBアクセスの手順
-		- エンティティクラスの作成手順
-		- Mapper
-		- バインド変数
-		- 実行結果に詳細ログを出力する
+	- エンティティクラスの作成手順
+	- Mapper
+	- バインド変数
+	- 実行結果に詳細ログを出力する
 - [ビジネスロジック層](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Chap5_BusinessLogic)
 	- Dependency Injection
 	- ビジネスロジック層の構築
