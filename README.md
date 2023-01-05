@@ -18,7 +18,7 @@ Spring Frameworkの問題点に対してSpring Bootには大きく2つの利点�
 	- 記述済みのJava Configクラスを大量に提供している
 	- Java Configファイルを記述する量が減る
 
-***〜　Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供しているのみで純粋なSpring Frameworkである　〜  ***
+**〜　Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供しているのみで純粋なSpring Frameworkである　〜  **
 
 ---
 
