@@ -22,5 +22,13 @@ Spring Frameworkの問題点を解決するためにSpring Bootが存在する�
 	- Bean Varidationを使った入力値チェックを実装する
 	- @RequestParamと@Varidatedの違いについて
 	- 相関バリデーションチェックを実装する
+- [My Batis Spring](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Chap4_MyBatisSpring)
+	- 永続化層
+	- My-Batis-Springのための設定
+	- MyBatis-Springを使ったDBアクセスの手順
+		- エンティティクラスの作成手順
+		- Mapper
+		- バインド変数
+		- 実行結果に詳細ログを出力する
 - 付録
 	- 整備中
