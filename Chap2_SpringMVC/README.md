@@ -1,18 +1,18 @@
 # Spring MVC×ThymeleafでHelloWorld
-
+本章ではSpring MVCとTymeleafを用いて簡単なWEBアプリケーションを作成する。  
 - [Spring MVC](https://spring.pleiades.io/spring-framework/docs/current/reference/html/web.html)：Spring BootでWEBアプリを作成する際に使用するフレームワーク 
 - [Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf_ja.html)：Spring MVCのビューとして使用できる
   - HTML5として記述可能
   - JSPのようにJavaソースがビュー側に入り込まない
   - クロスサイトスクリプティング脆弱性を引き起こしにくい
 
-## Spring Bootプロジェクトを作ってみる
-- EclipseからSpringスタータプロジェクトを作成する
-  - Eclipseから「新規」->「Springスタータプロジェクト」
-  - パッケージングは「jar」
-  - パッケージネーム・成果物・プロジェクトの名前に合わせる
-    - スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
-    - build.gradleに選択した機能情報が記述
+# Spring Bootプロジェクトを作ってみる
+まずは、EclipseでSpring bootのプロジェクトを作成する。  
+- Eclipseから「新規」->「Springスタータプロジェクト」
+- パッケージングは「jar」
+- パッケージネーム・成果物・プロジェクトの名前に合わせる
+	- スプリングスタータプロジェクト・依存関係：「Spring Web」と「Thymeleaf」を選択 
+	- build.gradleに選択した機能情報が記述
 
 |機能|説明|
 |---|---|
@@ -49,11 +49,8 @@ tasks.named('test') {
 
 ```
 
-
-続いて、静的コンテンツ・mainメソッドの作成を行う
-
-<a id="chap2-1"></a>
-## 静的コンテンツを返す機能の作成
+# 静的コンテンツを返す機能の作成
+まずは、Spring Bootを使って静的コンテンツを作成する。
 - 静的コンテンツ：常に同じ結果を返すコンテンツ（CSS・JavaScriptなど）※検索エンジンなどで検索した結果で変化するコンテンツを動的コンテンツ  
 - 作成するもの
   - hello.html：静的コンテンツ
@@ -68,12 +65,11 @@ tasks.named('test') {
 	- hello.html
 	- Application.java
 
-### 静的コンテンツの作成手順
-- hello.index
-  - 配置場所：「src/main/resource/static」に配置する
-  - staic直下に配置したHTMLファイルは[http://localhost:8080/hello.index](http://localhost:8080/hello.index)でアクセスできる
+## 静的コンテンツの作成
+- hello.index：「src/main/resource/static/hello.html」
+  - 「src/main/resource/static」直下に配置した静的コンテンツはアプリケーションとして実行せずとも「http://localhost:8080/ファイル名」でアクセスできる
 
----
+※今回の場合は、[http://localhost:8080/hello.html](http://localhost:8080/hello.html)から直接アクセスできる。  
 
 ```html
 <!DOCTYPE html>
@@ -89,40 +85,41 @@ tasks.named('test') {
 </html>
 ```
 
-### main()メソッドの作成手順
-- Application.java
-  - 配置場所：「com.example.プロジェクト名」に配置する
-  - @SpringBootApplicationを付与
+## main()メソッドの作成手順
+Spring bootで作成されたWEBアプリケーションは「main」メソッドから起動する。  
+- Application.java：「src/main/java/com/example/ベースパッケージ」に配置する（※Spring Bootでプロジェクトを作成すると自動で作成される）
+  - 「@SpringBootApplication」アノテーションを付与
   - Spring Bootアプリケーションはmain()メソッドから起動する。  
   - main()メソッド内には、DIコンテナを作成する処理のみを記述する。DIコンテナが作成されるとWEBアプリケーションとして動作する。  
-  
-- @SpringBootApplication：@Configration・@ComponentScan・EnableAutoConfigrationを組み合わせたアノテーション
-  - **@ComponentScanにbasepakagesを指定しない場合、付与したクラスのパッケージ配下がコンポーネントスキャン対象となる**
-    - 今回の場合は「com.example.プロジェクト名」配下がスキャン対象となる
-  - Java Configクラスの役割も兼ねるので、@Beanを付与したメソッドをクラス内に宣言可能
 
----
+|アノテーション|説明|
+|@SpringBootApplication|@Configration・@ComponentScan・EnableAutoConfigrationを組み合わせたアノテーション <br>
+「@ComponentScan」にbasepakagesを指定しない場合、付与したクラスのパッケージ配下がコンポーネントスキャン対象となる <br>
+今回の場合は「src/main/java/com/example/ベースパッケージ」配下がコンポーネントスキャンのスキャン対象となる <br>
+Java Configクラスの役割も兼ねるので、@Beanを付与したメソッドをクラス内に宣言可能|
 
 ```java
-package com.example.springmvcpractice;
+package com.example.springmvchello;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringMvcPracticeApplication {
+public class SpringMvcHelloApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringMvcPracticeApplication.class, args);
+		SpringApplication.run(SpringMvcHelloApplication.class, args);
 	}
 
 }
+
 ```
 
-プロジェクトを「Spring Bootアプリケーション」として実行し、[http://localhost:8080/hello.index](http://localhost:8080/hello.index)にアクセス。
+プロジェクトを右クリックし「実行」から「Spring Bootアプリケーション」として実行し、[http://localhost:8080/hello.index](http://localhost:8080/hello.index)にアクセス。
+  
+画面が表示されればOK。
 
-<a id="chap2-2"></a>
-## 動的コンテンツを返す機能の作成
+# 動的コンテンツを返す機能の作成
 
 次に動的コンテンツを返す機能を作成する。  
 動的コンテンツを返すWEBアプリケーションはプログラムの機能をModel・View・Controllerの３つに分割して作成する。
@@ -150,12 +147,21 @@ public class SpringMvcPracticeApplication {
 	- HelloController.java
 	- index.html
 	
-### コントローラクラスの作成手順
+## コントローラクラスの作成手順
 [http://localhost:8080/hello/index](http://localhost:8080/hello/index)にアクセスされた際に動作するコントローラクラスを作成する。
 
 - HelloController.java：「src/main/java/com/example/web/controller/HelloController.java」
-	- コントローラクラスに@Controllerが付与される
-	- @RequestMapping・@GetMappingを付与したコントローラメソッドを作成
+	- コントローラクラスに「@Controller」が付与される
+	- 「@RequestMapping・@GetMapping」を付与したコントローラメソッドを作成
+	- コントローラメソッド
+		- 「GetMapping」でURLを指定する。
+		- 戻り値は「String」を指定するのが一般的である。**ビューの論理名（拡張子を除いたもの）**を指定。
+			```java
+			@GetMapping("/index")
+			public String index() {
+				return "hello/index";
+			}
+			```
 
 ```java
 package com.example.springmvcpractice.controller;
@@ -184,19 +190,7 @@ public class HelloController {
 
 ※@RequestMapingはクラス・メソッドに付与できる。@GetMappingはメソッドのみに付与できる
 
----
-
-- コントローラメソッド
-	- 戻り値は**ビューの論理名（拡張子を除いたもの）**を指定。
-
-```java
-@GetMapping("/index")
-public String index() {
-	return "hello/index";
-}
-```
-
-### Viewテンプレートの作成手順
+## Viewテンプレートの作成手順
 画面はHTML5で記述できるTymeleafで作成する。  
 
 - index.html：「src/main/resource/templates/hello/index.html」
@@ -204,7 +198,7 @@ public String index() {
 	- 動的リンクを埋め込む場合は「@{リンク}」のようにリンクURL記法を用いる
 
 ```html
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
@@ -224,8 +218,8 @@ public String index() {
 直接[http://localhost:8080/hello/index](http://localhost:8080/hello/index)にアクセスできることを確認。
 
 
-<a id="chap2-3"></a>
-## リクエストパラメータを受け取る動的コンテンツの作成
+
+# リクエストパラメータを受け取る動的コンテンツの作成
 リクエストパラメータを受け取り、その内容を反映させた動的コンテンツを作成する。
   
 - 作成するもの
@@ -233,7 +227,7 @@ public String index() {
 	- /hello/result.html
 
 
-### コントローラクラスにメソッドを追加
+## コントローラクラスにメソッドを追加
 
 
 - HelloController.java
@@ -270,7 +264,7 @@ public class HelloController {
 |@RequestParam|リクエストパラメータを引数で受け取るためのアノテーション。引数名はリクエストパラメータに合わせる。|
 |Model|コントローラからビューに値を渡すためのインタフェース。addAttribute()メソッドで属性名と値を格納する。第一引数の「"userNameAttribute"」はビューに渡す際の属性名で、ビュー側で「${userNameAttribute}」で受け取る。第2引数は値そのもの。|
 
-### 結果を出力するビューの作成
+## 結果を出力するビューの作成
 
 - result.html
 	- コントローラからModelを通して渡された値には「${属性名}」という変数式を用いる
@@ -297,7 +291,7 @@ public class HelloController {
 
 
 <a id="chap2-4"></a>
-## リダイレクト機能の作成
+# リダイレクト機能の作成
 リダイレクト機能を使うことで、ページにアクセスした際自動的に別ページに遷移させられる。  
 [http://localhost:8080/](http://localhost:8080/)にアクセスすると、[http://localhost:8080/hello/index.html](http://localhost:8080/hello/index.html)にリダイレクトする機能を作成する。
 
