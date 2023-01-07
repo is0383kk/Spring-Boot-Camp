@@ -2,7 +2,7 @@
 
 # Spring Framework
 Spring FrameworkはJavaで実装されたオープンソースのフレームワーク。
-Dependency Injection（DIコンテナ）が機能の中心。  
+Dependency Injection（DI）が機能の中心。  
 一方でSpring Frameworkには問題点がある。
 - 依存ライブラリが多数
 - 記述すべきJava Configが大量
