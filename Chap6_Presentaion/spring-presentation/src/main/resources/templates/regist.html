@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>一覧画面</title>
+</head>
+
+<body>
+	<h1>社員情報をDBに挿入</h1>
+
+	<a href="index.html" th:href="@{index}">一覧画面に遷移</a>
+
+	<form method="post" action="index.html" th:action="@{insertComplete}">
+		<table>
+			<tr>
+				<th>ID</th>
+				<td>自動採番</td>
+			</tr>
+			<tr>
+				<th>氏名</th>
+				<td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<th>所属年月日</th>
+				<td><input type="date" name="joinedDate"></td>
+			</tr>
+			<tr>
+				<th>部署名</th>
+				<td><input type="text" name="departmentName"></td>
+			</tr>
+			<tr>
+				<th>メールアドレス</th>
+				<td><input type="email" name="email"></td>
+			</tr>
+		</table>
+		<button>登録する</button>
+	</form>
+
+</body>
+</html>

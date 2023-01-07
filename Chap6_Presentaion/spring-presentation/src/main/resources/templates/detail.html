@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>詳細画面</title>
+</head>
+
+<body>
+	<h1>社員詳細</h1>
+
+	<a href="index.html" th:href="@{index}">一覧画面に遷移</a>
+	<a href="edit.html" th:href="@{edit(id=${employee.id})}">修正画面に遷移</a>
+	<table>
+		<tr>
+			<th>ID</th>
+			<td th:text="${employee.id}"></td>
+		</tr>
+		<tr>
+			<th>氏名</th>
+			<td th:text="${employee.name}"></td>
+		</tr>
+		<tr>
+			<th>所属年月日</th>
+			<td th:text="${employee.joinedDate}"></td>
+		</tr>
+		<tr>
+			<th>所属部署</th>
+			<td th:text="${employee.departmentName}"></td>
+		</tr>
+		<tr>
+			<th>メールアドレス</th>
+			<td th:text="${employee.email}"></td>
+		</tr>
+	</table>
+   <a href="index.html" th:href="@{deleteComplete(id=${employee.id})}">削除する</a>
+</body>
+</html>
