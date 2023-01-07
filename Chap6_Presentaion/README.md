@@ -402,7 +402,6 @@ import com.example.springpresentation.form.EmployeeForm;
 import com.example.springpresentation.service.EmployeeService;
 
 @Controller
-@RequestMapping("/")
 public class EmployeeController {
 	
 	private final EmployeeService employeeService;
@@ -476,7 +475,6 @@ public class EmployeeController {
 	}
 
 }
-
 ```
 # プレゼンテーション層の構築②：画面の作成
 ここでは、画面作成を行う。  
