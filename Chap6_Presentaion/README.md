@@ -370,10 +370,14 @@ public class EmployeeForm {
 				", email=" + email + "]";
 	}
 }
+
 ```
+  
+
 |アノテーション|説明|
 |---|---|
 |@DateTimeFormat|日付のフォーマットを指定する<br>※アノテーションを使わなくとも「application.properties」に日付フォーマットを指定できる。<br>「spring.mvc.format.date=iso」を指定するとアノテーションを付与しなくても文字列からLocalDate型に「uuuu-MM-dd」形式で型変換される|
+  
 
 ## コントローラクラスの作成
 ビジネスロジック層の呼び出しを行うコントローラクラスの作成を行います。  
