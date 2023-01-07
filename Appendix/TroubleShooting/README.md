@@ -41,3 +41,10 @@ Caused by: org.springframework.expression.spel.SpelEvaluationException: EL1008E:
 ### SQL: INSERT INTO employee(name, joined_date, departmentName, email) VALUES(?, ?, ?, ?)
 ### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'departmentName' in 'field list'
 ```
+※バインド変数にテーブルのカラム名（#{department_name}）を指定している場合（本来はEntityクラスのフィールド名（#{departmentName}）でバインド変数を用いる）
+```bash
+2023-01-07T19:44:43.851+09:00[0;39m [32mDEBUG[0;39m [35m50454[0;39m [2m---[0;39m [2m[nio-8080-exec-4][0;39m [36mc.e.s.mapper.EmployeeMapper.insert      [0;39m [2m:[0;39m ==>  Preparing: INSERT INTO employee(name, joined_date, department_name, email) VALUES(?, ?, ?, ?)
+[2m2023-01-07T19:44:43.856+09:00[0;39m [31mERROR[0;39m [35m50454[0;39m [2m---[0;39m [2m[nio-8080-exec-4][0;39m [36mo.a.c.c.C.[.[.[/].[dispatcherServlet]   [0;39m [2m:[0;39m Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.mybatis.spring.MyBatisSystemException] with root cause
+
+org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'department_name' in 'class com.example.springpresentation.entity.Employee'
+```
