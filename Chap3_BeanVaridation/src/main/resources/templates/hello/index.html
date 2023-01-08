@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>入力画面</title>
+<link rel="stylesheet" href="../../static/css/style.css"
+	th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<h1>名前と年齢を入力してください</h1>
+	<form action="result.html" th:action="@{result}"
+		th:object="${helloForm}">
+		
+		名前：<input type="text" name="userName" placeholder="名前を1〜20文字以内で入力してください" th:field="*{userName}"><br>
+		<div th:errors="*{userName}" class="error">ダミー</div>
+		
+		年齢：<input type="text" name="age" placeholder="年齢を1〜100までの数値で入力してください" th:field="*{age}"><br>
+		<div th:errors="*{age}" class="error">ダミー</div>
+		
+		<button>送信</button>
+	
+	</form>
+	<a th:href="@{../compare/index}">メールアドレス入力画面へ行く</a>
+</body>
+
+</html>
