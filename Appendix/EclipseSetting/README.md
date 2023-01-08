@@ -63,7 +63,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 ```
 ## Controllerを作成する  
-- 「/src/main/java」にクラスを作成し以下の「HelloController」を作成する  
+- 「/src/main/java/ベースパッケージ」にクラスを作成し以下の「HelloController」を作成する  
 ```java
 package com.example.springSample;
 import org.springframework.context.annotation.ComponentScan;
@@ -73,7 +73,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@ComponentScan(basePackageClasses = HelloController.class)
 @Controller
 public class HelloController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
