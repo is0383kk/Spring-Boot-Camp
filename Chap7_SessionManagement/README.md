@@ -38,6 +38,8 @@ Modelはクライアントからリクエストがある度に生成され、ブ
   - セッション管理したいクラスに「@Component」を作りBean定義する
   - セッション管理したいクラス(Bean定義済み)に「@SessionScope」を付与する
   - SessionScopeで管理されたBeanをコントローラクラス上でDIする
+  
+「[page1](http://localhost:8080/page1)」と「[page2](http://localhost:8080/page2)」を異なるタブで開き、「名前」と「時刻」が共有される。
 
 ## セッションスコープを使ったクラスの作成
 複数のページ間で「名前」と「時間」をセッションスコープで管理するためのクラスを作成する。
@@ -102,8 +104,8 @@ public class Account implements Serializable {
 - RootController：「src/main/java/ベースパッケージ/controller/RootController.java」
   - 以下３つにアクセスされた際に動作するコントローラメソッドを作成する
     - [http://localhost:8080/](http://localhost:8080/)
-    - [http://localhost:8080/](http://localhost:8080/login)
-    - [http://localhost:8080/](http://localhost:8080/top)
+    - [http://localhost:8080/login](http://localhost:8080/login)
+    - [http://localhost:8080/top](http://localhost:8080/top)
 
 ```java
 package com.example.springsession.controller;
