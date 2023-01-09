@@ -65,4 +65,5 @@ Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供�
 - 付録
 	- [Eclipseの導入](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Appendix/EclipseSetting)
 	- 整備中
-	- [application.propertiesで設定できる項目](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html)
+	- [公式リファレンス](https://spring.pleiades.io/spring-boot/docs/current/reference/html/)
+		- [application.propertiesで設定できる項目](https://spring.pleiades.io/spring-boot/docs/current/reference/html/application-properties.html)
