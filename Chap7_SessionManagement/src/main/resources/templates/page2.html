@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Page2</title>
+</head>
+<body>
+    <p>セッションスコープの利用</p>
+    <table>
+    <tr>
+        <td>名前</td>
+        <td th:text="${account.name}"></td>
+    </tr>
+    <tr>
+        <td>時刻</td>
+        <td th:text="${#temporals.format(account.dateTime, 'MM/dd HH:ss')}"></td>
+    </tr>    
+    </table>
+    <a href="top.html" th:href="@{top}">Topへ</a>
+    <a href="page1.html" th:href="@{page1}">Page1へ</a>
+</body>
+</html>

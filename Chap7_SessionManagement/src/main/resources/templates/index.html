@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>入力画面</title>
+</head>
+<body>
+    <h1>名前を入力してください</h1>
+    <form action="login.html" th:action="@{login}">
+        <input type="text" name="name">
+        <button>送信</button>
+    </form>
+</body>
+</html>
