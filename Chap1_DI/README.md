@@ -275,4 +275,34 @@ public class HogeProxy implements Hoge {
 # AOP
 - AOP：本来の処理の前後に割り込み処理を行う
 	- トランザクションの開始・終了・権限チェックなど
+# 同じ型のBeanが複数あるとどうなるか
+以下の場合、Fooを実装しているクラスが2つ存在するため、BarクラスにおいてどちらのBeanを代入するか判断できないため例外が発生する。  
+```java
+@Component
+public class FooImpl1 implements Foo {...}
+
+@Component
+public class FooImpl2 implements Foo {...}
+
+@Component
+public class Bar {
+	public Bar(Foo foo){...}
+}
+```
+
+- 対処法
+	- 「@Qualifier」を使用しDIしたいBean IDを指定する
+		```java
+		@Component // Bean IDは「fooImpl1」
+		public class FooImpl1 implements Foo {...}
+
+		@Component // Bean IDは「fooImpl2」
+		public class FooImpl2 implements Foo {...}
+
+		@Component
+		public class Bar {
+			public Bar(@Qualifier("fooImpl1")){...}
+		}
+		```
 -->
+
