@@ -218,7 +218,7 @@ public class SpringDiContainer2Application {
 logicMethodを実行します
 ```
 
-
+<!--
 # スコープ  
 - スコープ：コンテナが管理しているBeanの有効範囲
 	- Beanがいつ生成され、いつ破棄されるか
@@ -272,3 +272,8 @@ public class HogeProxy implements Hoge {
 	public void hoge() {...}
 }
 ```
+
+# AOP
+- AOP：本来の処理の前後に割り込み処理を行う
+	- トランザクションの開始・終了・権限チェックなど
+-->
