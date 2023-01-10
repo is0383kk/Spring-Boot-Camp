@@ -14,6 +14,13 @@ Spring Frameworkにおいては、アプリケーション実行時にインス�
 
 本章では、「コンポーネントスキャン」、「Java Config」を使ってBeanの定義を行い、DIコンテナから取り出す一連の流れを学ぶ。  
 
+## 結局DIってなんなの？
+- DIとは「依存性の注入」
+	- 依存性：必要なインスタンス
+	- 注入：自動的代入
+つまり、DIとは **「newしないで代入してもらう」** こと
+
+
 # Bean定義方法①：コンポーネントスキャンによるBeanの定義
 - コンポーネントスキャン：指定されたパッケージから「@Component」が付与されたクラスを探す
   - 「@Component」が付与されたクラスがあればインスタンス化しDIコンテナに格納する
@@ -202,11 +209,66 @@ public class SpringDiContainer2Application {
 }
 ```
 
-#### 実行結果
+### 実行結果
 「SpringDiContainerApplication」を右クリックし、「Java アプリケーション」として実行する。すると以下のように、DIコンテナからBeanの取り出しができていることがわかる。
 ```
 2023-01-05T15:54:37.177+09:00  INFO 51688 --- [           main] c.e.s.SpringDiContainer2Application      : Starting SpringDiContainer2Application using Java 17.0.5 with PID 51688 (/home/is0383kk/workspace/workspace_sp/spring-di-container-2/bin/main started by is0383kk in /home/is0383kk/workspace/workspace_sp/spring-di-container-2)
 2023-01-05T15:54:37.180+09:00  INFO 51688 --- [           main] c.e.s.SpringDiContainer2Application      : No active profile set, falling back to 1 default profile: "default"
 2023-01-05T15:54:37.301+09:00  INFO 51688 --- [           main] c.e.s.SpringDiContainer2Application      : Started SpringDiContainer2Application in 0.33 seconds (process running for 0.579)
 logicMethodを実行します
+```
+
+
+# スコープ  
+- スコープ：コンテナが管理しているBeanの有効範囲
+	- Beanがいつ生成され、いつ破棄されるか
+|スコープの種類|説明|
+|---|---|
+|singleton|インスタンスは１つのみ <br> singletonでは１つのインスタンスが使いまわされる <br> フィールドで値を保持するのは厳禁|
+|prototype|必要なときにインスタンスが毎回作られる|
+|request|リクエストと同じ|
+|session|セッションと同じ|
+
+※singletonとsession以外ほぼ使わない
+
+## スコープの指定方法
+- 「@scope」をBeanに付与する
+	- Beanが「@Component」を使って定義されている場合
+		```java
+		@Scope("session")
+		@Component
+		public class Hoge {
+			...
+		}
+		```
+	- Beanが「@Bean」で定義されている場合
+		```java
+		@Configuration
+		public class AppConfig {
+			@Scope("request")
+			@Bean
+			public Hoge hoge() {
+				...
+			}
+		}
+		```
+
+# プロキシ
+- プロキシ：本来BeanとなるはずだったインスタンスをラップしたBean
+	- インタフェース・継承を利用して作られる
+
+具体例：
+こちらの例の場合、一見「HogeImpl」がBean定義されるようにみえるが
+```java
+@Component
+public class HogeImpl implements Hoge {
+	public void hoge() {...}
+}
+```
+実際にBeanとなるものは「HogeProxy」となる
+```java
+public class HogeProxy implements Hoge {
+	@Override
+	public void hoge() {...}
+}
 ```
