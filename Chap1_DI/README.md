@@ -87,6 +87,12 @@ ApplicationContext context = SpringApplication.run(AppConfig.class, args);
 Beanの取り出しには「ApplicationContextのgetBean()」メソッドを使用する。  
 
 - SpringDiContainerApplication：「src/main/java/com/example/springdicontainer」
+
+|アノテーション|説明|
+|---|---|
+|@SpringBootApplication|@Configuration・@ComponentScan・@EnableAutoConfigurationを組み合わせたアノテーション<br>@ComponentScanでパッケージが
+指定されていないため、このクラスのパッケージがベースパッケージとなる|
+
 ```java
 package com.example.springdicontainer;
 
