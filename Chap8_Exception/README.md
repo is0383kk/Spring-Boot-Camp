@@ -14,11 +14,13 @@
   - 処理対象の例外
     - java.lang.Exception
     - java.lang.RuntimeException
+ 
  |アノテーション|説明|
  |---|---|
  |@ControllerAdvice|「@Component」を持つ <br> 「@ExceptionHandler」を付与した例外処理メソッドを定義することができる|
  |@ExceptionHandler|付与したメソッドが例外処理を行うことを示すアノテーション <br> 例外処理の種類はメソッドの引数の型で定義される|
  |@ResponseStatus|HTTPレスポンスのステータスコードを指定するアノテーション <br> HttpStatus列挙型でステータスコードを指定する|
+
 
 ```java
 package com.example.springexception.handler;
