@@ -97,8 +97,7 @@ Beanの取り出しには「ApplicationContextのgetBean()」メソッドを使�
 
 |アノテーション|説明|
 |---|---|
-|@SpringBootApplication | @Configuration・@ComponentScan・@EnableAutoConfigurationを組み合わせたアノテーション <br> @ComponentScanでパッケージが
-指定されていないため、このクラスのパッケージがベースパッケージとなる|
+|@SpringBootApplication | @Configuration・@ComponentScan・@EnableAutoConfigurationを組み合わせたアノテーション <br> @ComponentScanでパッケージが指定されていないため、このクラスのパッケージがベースパッケージとなる|
 
 ```java
 package com.example.springdicontainer;
