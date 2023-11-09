@@ -68,3 +68,4 @@ Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供�
 	- [公式リファレンス](https://spring.pleiades.io/spring-boot/docs/current/reference/html/)
 		- [公式入門ガイド](https://spring.pleiades.io/guides#getting-started-guides)
 		- [application.propertiesで設定できる項目](https://spring.pleiades.io/spring-boot/docs/current/reference/html/application-properties.html)
+  	- [thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf_ja.html)
