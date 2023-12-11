@@ -1,6 +1,6 @@
 # Spring Boot勉強用リポジトリ
 
-# Spring Framework
+# Spring Frameworkの問題を解決するためのSpring Boot
 Spring FrameworkはJavaで実装されたオープンソースのフレームワーク。
 Dependency Injection（DI）が機能の中心。  
 一方でSpring Frameworkには問題点がある。
@@ -64,7 +64,6 @@ Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供�
 		- 画面の作成
 - 付録
 	- [Eclipseの導入](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Appendix/EclipseSetting)
-	- 整備中
 	- [公式リファレンス](https://spring.pleiades.io/spring-boot/docs/current/reference/html/)
 		- [公式入門ガイド](https://spring.pleiades.io/guides#getting-started-guides)
 		- [application.propertiesで設定できる項目](https://spring.pleiades.io/spring-boot/docs/current/reference/html/application-properties.html)
