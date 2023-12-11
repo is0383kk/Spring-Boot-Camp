@@ -1,6 +1,8 @@
 # Spring Boot勉強用リポジトリ
 
-# Spring Frameworkの問題を解決するためのSpring Boot
+# Spring Boot
+Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供しているのみで純粋なSpring Frameworkである。  
+
 Spring FrameworkはJavaで実装されたオープンソースのフレームワーク。
 Dependency Injection（DI）が機能の中心。  
 一方でSpring Frameworkには問題点がある。
@@ -17,9 +19,6 @@ Spring Frameworkの問題点に対してSpring Bootには大きく2つの利点�
 - Auto Configrationクラス
 	- 記述済みのJava Configクラスを大量に提供している
 	- Java Configファイルを記述する量が減る
-
-
-Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供しているのみで純粋なSpring Frameworkである
 
 ---
 
