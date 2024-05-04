@@ -1,4 +1,5 @@
 # Spring Boot勉強用リポジトリ
+※あくまでis0383kkがSpring Bootを勉強した際のメモであり、言葉の定義や用語の使い方が曖昧な部分があります。
 
 # Spring Boot
 Spring BootはSpringStarterライブラリやAutoConfigrationクラスを提供しているのみで純粋なSpring Frameworkである。  
@@ -62,8 +63,8 @@ Spring Frameworkの問題点に対してSpring Bootには大きく2つの利点�
 		- コントローラクラスの作成
 		- 画面の作成
 - 付録
-	- [Eclipseの導入](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Appendix/EclipseSetting)
 	- [公式リファレンス](https://spring.pleiades.io/spring-boot/docs/current/reference/html/)
 		- [公式入門ガイド](https://spring.pleiades.io/guides#getting-started-guides)
 		- [application.propertiesで設定できる項目](https://spring.pleiades.io/spring-boot/docs/current/reference/html/application-properties.html)
   	- [thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf_ja.html)
+  	- [Eclipseの導入 Ubuntu20.04](https://github.com/is0383kk/Spring-Boot-Camp/tree/main/Appendix/EclipseSetting)
